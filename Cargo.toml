@@ -1,0 +1,6 @@
+[package]
+authors = ["Maarten Vos <maarten@mrtn.run>"]
+name = "bungie-rs"
+version = "0.1.0"
+[dependencies]
+reqwest = "*"
