@@ -1,3 +1,10 @@
+extern crate reqwest;
+extern crate serde_json;
+
+use destiny2;
+
+mod models;
+
 struct BungieClient {
     api_key: String,
     oauth_token: Option<String>
@@ -16,8 +23,20 @@ impl BungieClient {
         Destiny2 { bungie: &self }
     }
 
+    fn send_request<T>(method: HttpMethod, path: &str) -> T {
+        match method {
+            HttpMethod::Get => {
+                let response = reqwest::get("https://www.bungie.net/Platform".to_owned() + path);
+            },
+            HttpMethod::Post => {
+                
+            }
+        }
+    }
+
 }
 
-struct Destiny2<'a> {
-    bungie: &'a BungieClient
+enum HttpMethod {
+    Get,
+    Post
 }
