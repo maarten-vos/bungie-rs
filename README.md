@@ -10,11 +10,18 @@ A direct 1:1 link to the Bungie.net API
 ## Usage
 ```Rust
 extern crate bungie;
+extern crate dotenv;
+extern crate failure;
 
-use bungie::BungieClient,
+use bungie::BungieClient;
+use std::env;
+use dotenv::dotenv;
 
-fn main() {
-    let bungie = BungieClient::new("<api-key>").with_authentication_token("<oauth-token>");
-    let manifest = bungie.destiny2().get_destiny_manifest();
+fn main() -> Result<(), failure::Error> {
+    dotenv()?;
+    let bungie = BungieClient::new(env::var("API_KEY")?);
+    let manifest = bungie.destiny2().get_destiny_manifest()?;
+    println!("{}", manifest.response.version);
+    Ok(())
 }
 ```
