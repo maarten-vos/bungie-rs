@@ -2,6 +2,16 @@
 authors = ["Maarten Vos <maarten@mrtn.run>"]
 name = "bungie-rs"
 version = "0.1.0"
+description = "A Rust crate for interacting with the Bungie.net API"
+repository = "https://github.com/inferiormartin/bungie-rs"
+readme = "README.md"
+keywords = ["bungie", "destiny2"]
+categories = ["api-bindings"]
+license = "MIT"
+
+[badges]
+travis-ci = { repository = "inferiormartin/bungie-rs", branch = "master" }
+
 [dependencies]
 reqwest = "0.8.6"
 serde_json = "1.0.22"
