@@ -1,6 +1,6 @@
 [package]
 authors = ["Maarten Vos <maarten@mrtn.run>"]
-name = "bungie-rs"
+name = "bungie"
 version = "0.1.0"
 description = "A Rust crate for interacting with the Bungie.net API"
 repository = "https://github.com/inferiormartin/bungie-rs"
