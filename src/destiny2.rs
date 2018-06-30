@@ -1,12 +1,11 @@
-use lib::BungieClient;
-use models::DestinyManifest;
+use BungieClient;
 
-struct Destiny2<'a> {
-    bungie: &'a BungieClient
+pub struct Destiny2<'a> {
+    pub bungie: &'a BungieClient
 }
 
-impl Destiny2 {
-    fn get_destiny_manifest() -> DestinyManifest {
-        bungie.send_request("/Destiny2/Manifest/");
+impl<'a> Destiny2<'a> {
+    fn get_destiny_manifest() {
+        
     }
 }
