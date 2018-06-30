@@ -1,7 +1,7 @@
 extern crate reqwest;
 extern crate serde;
 extern crate failure;
-#[macro_use] extern crate serde_json;
+extern crate serde_json;
 #[macro_use] extern crate hyper;
 #[macro_use] extern crate serde_derive;
 
