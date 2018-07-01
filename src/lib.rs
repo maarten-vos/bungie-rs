@@ -16,7 +16,6 @@ use serde::{
 
 #[macro_use]
 mod macros;
-pub mod models;
 pub mod destiny2;
 
 header! { (XApiKey, "X-API-Key") => [String] }

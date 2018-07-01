@@ -2,7 +2,7 @@ extern crate bungie;
 extern crate dotenv;
 extern crate failure;
 
-use bungie::{BungieClient, models::MembershipType};
+use bungie::{BungieClient, destiny2::models::*};
 use std::env;
 use dotenv::dotenv;
 

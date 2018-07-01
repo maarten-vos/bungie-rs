@@ -1,5 +1,7 @@
 use BungieClient;
-use models::*;
+use destiny2::models::*;
+
+pub mod models;
 
 pub struct Destiny2<'a> {
     pub bungie: &'a BungieClient
