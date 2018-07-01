@@ -14,6 +14,8 @@ use serde::{
     de::DeserializeOwned
 };
 
+#[macro_use]
+mod macros;
 pub mod models;
 pub mod destiny2;
 
@@ -50,7 +52,6 @@ impl BungieClient {
             }
             request.header(XApiKey(self.api_key.clone()));
             let mut response = request.send()?;
-            
             Ok(response.json()?)
         }
     }
