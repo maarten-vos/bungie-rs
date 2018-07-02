@@ -81,7 +81,42 @@ pub struct SingleComponentResponseOfDestinyCharacterProgressionComponent {
 pub struct DestinyCharacterProgressionComponent {
     progressions: HashMap<u32, DestinyProgression>,
     factions: HashMap<u32, DestinyFactionProgression>,
-    milestones: HashMap<u32, DestinyMilestone>
+    milestones: HashMap<u32, DestinyMilestone>,
+    quests: Vec<DestinyQuestStatus>,
+    #[serde(rename = "uninstancedItemObjectives")]
+    uninstanced_item_objectives: HashMap<u32, Vec<DestinyInventoryItemDefinition>>
+}
+
+#[derive(Debug, Deserialize)]
+pub struct DestinyInventoryItemDefinition {
+    #[serde(rename = "displayProperties")]
+    display_properties: DestinyDisplayPropertiesDefinition,
+    #[serde(rename = "secondaryIcon")]
+    secondary_icon: String,
+    #[serde(rename = "secondaryOverlay")]
+    secondary_overlay: String,
+    #[serde(rename = "secondarySpecial")]
+    secondary_special: String,
+    #[serde(rename = "backgroundColor")]
+    background_color: DestinyColor,
+    screenshot: String,
+    #[serde(rename = "itemTypeDisplayName")]
+    item_type_display_name: String,
+    #[serde(rename = "uiItemDisplayStyle")]
+    ui_item_display_style: String,
+    #[serde(rename = "itemTypeAndTierDisplayName")]
+    item_type_and_tier_display_name: String,
+    #[serde(rename = "displaySource")]
+    display_source: String
+}
+
+#[derive(Debug, Deserialize)]
+pub struct DestinyDisplayPropertiesDefinition {
+    description: String,
+    name: String,
+    icon: String,
+    #[serde(rename = "hasIcon")]
+    has_icon: bool
 }
 
 #[derive(Debug, Deserialize)]
@@ -89,7 +124,39 @@ pub struct DestinyMilestone {
     #[serde(rename = "milestoneHash")]
     milestone_hash: u32,
     #[serde(rename = "availableQuests")]
-    available_quests: Vec<DestinyMilestoneQuest>
+    available_quests: Vec<DestinyMilestoneQuest>,
+    values: HashMap<String, f64>,
+    #[serde(rename = "vendorHashes")]
+    vendor_hashes: Vec<u32>,
+    vendors: Vec<DestinyMilestoneVendor>,
+    rewards: Vec<DestinyMilestoneRewardCategory>,
+    #[serde(rename = "startDate")]
+    start_date: Option<String>,
+    #[serde(rename = "endDate")]
+    end_date: Option<String>
+}
+
+#[derive(Debug, Deserialize)]
+pub struct DestinyMilestoneRewardCategory {
+    #[serde(rename = "rewardCategoryHash")]
+    reward_category_hash: u32,
+    entries: Vec<DestinyMilestoneRewardEntry>
+}
+
+#[derive(Debug, Deserialize)]
+pub struct DestinyMilestoneRewardEntry {
+    #[serde(rename = "rewardEntryHash")]
+    reward_entry_hash: u32,
+    earned: bool,
+    redeemed: bool
+}
+
+#[derive(Debug, Deserialize)]
+pub struct DestinyMilestoneVendor {
+    #[serde(rename = "vendorHash")]
+    vendor_hash: u32,
+    #[serde(rename = "previewItemHash")]
+    preview_item_hash: Option<u32>
 }
 
 #[derive(Debug, Deserialize)]
@@ -97,7 +164,13 @@ pub struct DestinyMilestoneQuest {
     #[serde(rename = "questItemHash")]
     quest_item_hash: u32,
     status: DestinyQuestStatus,
-    activity: Option<DestinyMilestoneActivity>
+    activity: Option<DestinyMilestoneActivity>,
+    challenges: Vec<DestinyChallengeStatus>
+}
+
+#[derive(Debug, Deserialize)]
+pub struct DestinyChallengeStatus {
+    objective: DestinyObjectiveProgress
 }
 
 #[derive(Debug, Deserialize)]
@@ -107,7 +180,33 @@ pub struct DestinyMilestoneActivity {
     #[serde(rename = "activityModeHash")]
     activity_mode_hash: Option<u32>,
     #[serde(rename = "activityModeType")]
+    activity_mode_type: Option<ActivityModeType>,
+    #[serde(rename = "modifierHashes")]
+    modifier_hashes: Vec<u32>,
+    variants: Vec<DestinyMilestoneActivityVariant>
+}
+
+#[derive(Debug, Deserialize)]
+pub struct DestinyMilestoneActivityVariant {
+    #[serde(rename = "activityHash")]
+    activity_hash: u32,
+    #[serde(rename = "completionStatus")]
+    completion_status: DestinyMilestoneActivityCompletionStatus,
+    #[serde(rename = "activityModeHash")]
+    activity_mode_hash: Option<u32>,
+    #[serde(rename = "activityModeType")]
     activity_mode_type: Option<ActivityModeType>
+}
+
+#[derive(Debug, Deserialize)]
+pub struct DestinyMilestoneActivityCompletionStatus {
+    completed: bool,
+    phases: Vec<DestinyMilestoneActivityPhase>
+}
+
+#[derive(Debug, Deserialize)]
+pub struct DestinyMilestoneActivityPhase {
+    complete: bool
 }
 
 #[derive(Debug, Deserialize)]
