@@ -67,7 +67,107 @@ pub struct DestinyItemActionRequest {
 #[derive(Debug, Deserialize)]
 pub struct DestinyCharacterResponse {
     inventory: Option<SingleComponentResponseOfDestinyInventoryComponent>,
-    character: Option<SingleComponentResponseOfDestinyCharacterComponent>
+    character: Option<SingleComponentResponseOfDestinyCharacterComponent>,
+    progressions: Option<SingleComponentResponseOfDestinyCharacterProgressionComponent>
+}
+
+#[derive(Debug, Deserialize)]
+pub struct SingleComponentResponseOfDestinyCharacterProgressionComponent {
+    data: DestinyCharacterProgressionComponent,
+    privacy: ComponentPrivacySetting
+}
+
+#[derive(Debug, Deserialize)]
+pub struct DestinyCharacterProgressionComponent {
+    progressions: HashMap<u32, DestinyProgression>,
+    factions: HashMap<u32, DestinyFactionProgression>,
+    milestones: HashMap<u32, DestinyMilestone>
+}
+
+#[derive(Debug, Deserialize)]
+pub struct DestinyMilestone {
+    #[serde(rename = "milestoneHash")]
+    milestone_hash: u32,
+    #[serde(rename = "availableQuests")]
+    available_quests: Vec<DestinyMilestoneQuest>
+}
+
+#[derive(Debug, Deserialize)]
+pub struct DestinyMilestoneQuest {
+    #[serde(rename = "questItemHash")]
+    quest_item_hash: u32,
+    status: DestinyQuestStatus,
+    activity: Option<DestinyMilestoneActivity>
+}
+
+#[derive(Debug, Deserialize)]
+pub struct DestinyMilestoneActivity {
+    #[serde(rename = "activityHash")]
+    activity_hash: u32,
+    #[serde(rename = "activityModeHash")]
+    activity_mode_hash: Option<u32>,
+    #[serde(rename = "activityModeType")]
+    activity_mode_type: Option<ActivityModeType>
+}
+
+#[derive(Debug, Deserialize)]
+pub struct DestinyQuestStatus {
+    #[serde(rename = "questHash")]
+    quest_hash: u32,
+    #[serde(rename = "stepHash")]
+    step_hash: u32,
+    #[serde(rename = "stepObjectives")]
+    step_objectives: Vec<DestinyObjectiveProgress>,
+    tracked: bool,
+    #[serde(rename = "itemInstanceId")]
+    item_instance_id: i32,
+    completed: bool,
+    redeemed: bool,
+    started: bool,
+    #[serde(rename = "vendorHash")]
+    vendor_hash: Option<u32>
+}
+
+#[derive(Debug, Deserialize)]
+pub struct DestinyObjectiveProgress {
+    #[serde(rename = "objectiveHash")]
+    objective_hash: u32,
+    #[serde(rename = "destinationHash")]
+    destination_hash: Option<u32>,
+    #[serde(rename = "activityHash")]
+    activity_hash: Option<u32>,
+    progress: Option<i32>,
+    complete: bool,
+    visible: bool
+}
+
+#[derive(Debug, Deserialize)]
+pub struct DestinyFactionProgression {
+    #[serde(rename = "factionHash")]
+    faction_hash: u32,
+    #[serde(rename = "factionVendorIndex")]
+    faction_vendor_index: i32,
+    #[serde(rename = "progressionHash")]
+    progression_hash: u32,
+    #[serde(rename = "dailyProgress")]
+    daily_progress: i32,
+    #[serde(rename = "dailyLimit")]
+    daily_limit: i32,
+    #[serde(rename = "weeklyProgress")]
+    weekly_progress: i32,
+    #[serde(rename = "weeklyLimit")]
+    weekly_limit: i32,
+    #[serde(rename = "currentProgress")]
+    current_progress: i32,
+    level: i32,
+    #[serde(rename = "levelCap")]
+    level_cap: i32,
+    #[serde(rename = "stepIndex")]
+    step_index: i32,
+    #[serde(rename = "progressToNextLevel")]
+    progress_to_next_level: i32,
+    #[serde(rename = "nextLevelAt")]
+    next_level_at: i32
 }
 
 #[derive(Debug, Deserialize)]
@@ -177,6 +277,61 @@ pub struct DestinyItemComponent {
     lockable: bool,
     state: ItemState
 }
+
+enum_number!(ActivityModeType {
+    None = 0,
+    Story = 2,
+    Strike = 3,
+    Raid = 4,
+    AllPvP = 5,
+    Patrol = 6,
+    AllPvE = 7,
+    Reserved9 = 9,
+    Control = 10,
+    Reserved11 = 11,
+    Clash = 12,
+    Reserved13 = 13,
+    CrimsonDoubles = 15,
+    Nightfall = 16,
+    HeroicNightfall = 17,
+    AllStrikes = 18,
+    IronBanner = 19,
+    Reserved20 = 20,
+    Reserved21 = 21,
+    Reserved22 = 22,
+    Reserved24 = 24,
+    AllMayhem = 25,
+    Reserved26 = 26,
+    Reserved27 = 27,
+    Reserved28 = 28,
+    Reserved29 = 29,
+    Reserved30 = 30,
+    Supremacy = 31,
+    PrivateMatchesAll = 32,
+    Survival = 37,
+    Countdown = 38,
+    TrailsOfTheNine = 39,
+    Social = 40,
+    TrailsCountdown = 41,
+    TrailsSurvival = 42,
+    IronBannerControl = 43,
+    IronBannerClash = 44,
+    IronBannerSupremacy = 45,
+    ScoredNightfall = 46,
+    ScoredHeroicNightfall = 47,
+    Rumble = 48,
+    AllDoubles = 49,
+    Doubles = 50,
+    PrivateMatchesClash = 51,
+    PrivateMatchesControl = 52,
+    PrivateMatchesSupremacy = 53,
+    PrivateMatchesCountdown = 54,
+    PrivateMatchesSurvival = 55,
+    PrivateMatchesMayhem = 56,
+    PrivateMatchesRumble = 57,
+    HeroicAdventure = 58,
+    Showdown = 59,
+});
 
 enum_number!(DestinyGender {
     Male = 0,
