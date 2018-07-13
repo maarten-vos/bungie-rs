@@ -33,4 +33,15 @@ impl<'a> Destiny2<'a> {
         self.bungie.send_request(&path, None)
     }
 
+    pub fn get_item(&self, membership_type: MembershipType, destiny_membership_id: String, item_instance_id: i64, mut components: Vec<DestinyComponentType>) -> Result<DestinyItemResponse, ::failure::Error> {
+        let mut path = format!("/Destiny2/{}/Profile/{}/Item/{}?components=", membership_type as i64, destiny_membership_id, item_instance_id);
+        if components.is_empty() {
+            components.push(DestinyComponentType::None);
+        }
+        let mut component_list = components.iter().fold(String::new(), |string, elem| string + &format!("{}", *elem as i64));
+        component_list.pop();
+        path.push_str(&component_list);
+        self.bungie.send_request(&path, None)
+    }
+
 }

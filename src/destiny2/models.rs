@@ -20,6 +20,243 @@ pub struct Response<T> {
 }
 
 #[derive(Debug, Deserialize)]
+pub struct DestinyItemResponse {
+    #[serde(rename = "characterId")]
+    pub character_id: Option<i64>,
+    pub item: Option<SingleComponentResponseOfDestinyItemComponent>,
+    pub instance: Option<SingleComponentResponseOfDestinyItemInstanceComponent>,
+    pub objectives: Option<SingleComponentResponseOfDestinyItemObjectivesComponent>,
+    pub perks: Option<SingleComponentResponseOfDestinyItemPerksComponent>,
+    #[serde(rename = "renderData")]
+    pub render_data: Option<SingleComponentResponseOfDestinyItemRenderComponent>,
+    pub stats: Option<SingleComponentResponseOfDestinyItemStatsComponent>,
+    #[serde(rename = "talentGrid")]
+    pub talent_grid: Option<SingleComponentResponseOfDestinyItemTalentGridComponent>,
+    pub sockets: Option<SingleComponentResponseOfDestinyItemSocketsComponent>
+}
+
+#[derive(Debug, Deserialize)]
+pub struct SingleComponentResponseOfDestinyItemSocketsComponent {
+    pub data: DestinyItemSocketsComponent,
+    pub privacy: ComponentPrivacySetting
+}
+
+#[derive(Debug, Deserialize)]
+pub struct DestinyItemSocketsComponent {
+    pub sockets: Vec<DestinyItemSocketState>
+}
+
+#[derive(Debug, Deserialize)]
+pub struct DestinyItemSocketState {
+    #[serde(rename = "plugHash")]
+    pub plug_hash: Option<u32>,
+    #[serde(rename = "isEnabled")]
+    pub is_enabled: bool,
+    #[serde(rename = "enableFailIndexes")]
+    pub enable_fail_indexes: Vec<i32>,
+    #[serde(rename = "reusablePlugHashes")]
+    pub reusable_plug_hashes: Vec<u32>,
+    #[serde(rename = "plugObjectives")]
+    pub plug_objectives: Vec<DestinyObjectiveProgress>,
+    #[serde(rename = "reusablePlugs")]
+    pub reusable_plugs: Vec<DestinyItemPlug>
+}
+
+#[derive(Debug, Deserialize)]
+pub struct DestinyItemPlug {
+    #[serde(rename = "plugItemHash")]
+    pub plug_item_hash: u32,
+    #[serde(rename = "plugObjectives")]
+    pub plug_objectives: Vec<DestinyObjectiveProgress>,
+    #[serde(rename = "canInsert")]
+    pub can_insert: bool,
+    pub enabled: bool,
+    #[serde(rename = "insertFailIndexes")]
+    pub insert_fail_indexes: Vec<i32>,
+    #[serde(rename = "enableFailIndexes")]
+    pub enable_fail_indexes: Vec<i32>
+}
+
+#[derive(Debug, Deserialize)]
+pub struct SingleComponentResponseOfDestinyItemTalentGridComponent {
+    pub data: DestinyItemTalentGridComponent,
+    pub privacy: ComponentPrivacySetting
+}
+
+#[derive(Debug, Deserialize)]
+pub struct DestinyItemTalentGridComponent {
+    #[serde(rename = "talentGridHash")]
+    pub talent_grid_hash: u32,
+    pub nodes: Vec<DestinyTalentNode>,
+    #[serde(rename = "isGridComplete")]
+    pub is_grid_complete: bool,
+    #[serde(rename = "gridProgression")]
+    pub grid_progression: DestinyProgression
+}
+
+#[derive(Debug, Deserialize)]
+pub struct DestinyTalentNode {
+    #[serde(rename = "nodeIndex")]
+    pub node_index: i32,
+    #[serde(rename = "nodeHash")]
+    pub node_hash: u32,
+    pub state: DestinyTalentNodeState,
+    #[serde(rename = "isActivated")]
+    pub is_activated: bool,
+    #[serde(rename = "stepIndex")]
+    pub step_index: i32,
+    #[serde(rename = "materialsToUpgrade")]
+    pub materials_to_upgrade: Vec<DestinyMaterialRequirement>,
+    #[serde(rename = "activationGridLevel")]
+    pub activation_grid_level: i32,
+    #[serde(rename = "progressPercent")]
+    pub progress_percent: f64,
+    pub hidden: bool,
+    #[serde(rename = "nodeStatsBlock")]
+    pub node_stats_block: DestinyTalentNodeStatBlock
+}
+
+#[derive(Debug, Deserialize)]
+pub struct DestinyTalentNodeStatBlock {
+    #[serde(rename = "currentStepStats")]
+    pub current_step_stats: Vec<DestinyStat>,
+    #[serde(rename = "nextStepStats")]
+    pub next_step_stats: Vec<DestinyStat>
+}
+
+#[derive(Debug, Deserialize)]
+pub struct DestinyMaterialRequirement {
+    #[serde(rename = "itemHash")]
+    pub item_hash: u32,
+    #[serde(rename = "deleteOnAction")]
+    pub delete_on_action: bool,
+    pub count: i32,
+    #[serde(rename = "omitFromRequirements")]
+    pub omit_from_requirements: bool
+}
+
+#[derive(Debug, Deserialize)]
+pub struct SingleComponentResponseOfDestinyItemStatsComponent {
+    pub data: DestinyItemStatsComponent,
+    pub privacy: ComponentPrivacySetting
+}
+
+#[derive(Debug, Deserialize)]
+pub struct DestinyItemStatsComponent {
+    pub stats: HashMap<u32, DestinyStatDefinition>
+}
+
+#[derive(Debug, Deserialize)]
+pub struct DestinyStatDefinition {
+    #[serde(rename = "displayProperties")]
+    pub display_properties: DestinyDisplayPropertiesDefinition,
+    #[serde(rename = "aggregationType")]
+    pub aggregation_type: DestinyStatAggregationType,
+    #[serde(rename = "hasComputedBlock")]
+    pub has_computed_block: bool,
+    #[serde(rename = "statCategory")]
+    pub stat_category: DestinyStatCategory,
+    pub hash: u32,
+    pub index: i32,
+    pub redacted: bool
+}
+
+#[derive(Debug, Deserialize)]
+pub struct SingleComponentResponseOfDestinyItemRenderComponent {
+    pub data: DestinyItemRenderComponent,
+    pub privacy: ComponentPrivacySetting
+}
+
+#[derive(Debug, Deserialize)]
+pub struct DestinyItemRenderComponent {
+    #[serde(rename = "useCustomDyes")]
+    pub use_custom_dyes: bool,
+    #[serde(rename = "artRegions")]
+    pub art_regions: HashMap<i32, i32>
+}
+
+#[derive(Debug, Deserialize)]
+pub struct SingleComponentResponseOfDestinyItemPerksComponent {
+    pub data: DestinyItemPerksComponent,
+    pub privacy: ComponentPrivacySetting
+}
+
+#[derive(Debug, Deserialize)]
+pub struct DestinyItemPerksComponent {
+    pub perks: Vec<DestinyPerkReference>
+}
+
+#[derive(Debug, Deserialize)]
+pub struct DestinyPerkReference {
+    #[serde(rename = "perkHash")]
+    pub perk_hash: u32,
+    #[serde(rename = "iconPath")]
+    pub icon_path: String,
+    #[serde(rename = "isActive")]
+    pub is_active: bool,
+    pub visible: bool
+}
+
+#[derive(Debug, Deserialize)]
+pub struct SingleComponentResponseOfDestinyItemObjectivesComponent {
+    pub data: DestinyItemObjectivesComponent,
+    pub privacy: ComponentPrivacySetting
+}
+
+#[derive(Debug, Deserialize)]
+pub struct DestinyItemObjectivesComponent {
+    pub objectives: Vec<DestinyObjectiveProgress>,
+    #[serde(rename = "flavorObjective")]
+    pub flavor_objective: DestinyObjectiveProgress,
+    #[serde(rename = "dateCompleted")]
+    pub date_completed: Option<String>
+}
+
+#[derive(Debug, Deserialize)]
+pub struct SingleComponentResponseOfDestinyItemInstanceComponent {
+    pub data: DestinyItemInstanceComponent,
+    pub privacy: ComponentPrivacySetting
+}
+
+#[derive(Debug, Deserialize)]
+pub struct DestinyItemInstanceComponent {
+    #[serde(rename = "damageType")]
+    pub damage_type: DamageType,
+    #[serde(rename = "damageTypeHash")]
+    pub damage_type_hash: Option<u32>,
+    #[serde(rename = "primaryStat")]
+    pub primary_stat: DestinyStat,
+    #[serde(rename = "itemLevel")]
+    pub item_level: i32,
+    pub quality: i32,
+    #[serde(rename = "isEquipped")]
+    pub is_equipped: bool,
+    #[serde(rename = "canEquip")]
+    pub can_equip: bool,
+    #[serde(rename = "equipRequiredLevel")]
+    pub equip_required_level: i32,
+    #[serde(rename = "unlockHashesRequiredToEquip")]
+    pub unlock_hashes_required_to_equip: Vec<u32>,
+    #[serde(rename = "cannotEquipReason")]
+    pub cannot_equip_reason: EquipFailureReason
+}
+
+#[derive(Debug, Deserialize)]
+pub struct SingleComponentResponseOfDestinyItemComponent {
+    pub data: DestinyItemComponent,
+    pub privacy: ComponentPrivacySetting
+}
+
+#[derive(Debug, Deserialize)]
+pub struct DestinyStat {
+    #[serde(rename = "statHash")]
+    pub stat_hash: u32,
+    pub value: i32,
+    #[serde(rename = "maximumValue")]
+    pub maximum_value: i32
+} 
+
+#[derive(Debug, Deserialize)]
 pub struct DestinyManifest {
     pub version: String,
     #[serde(rename = "mobileAssetContentPath")]
@@ -43,339 +280,396 @@ pub struct GearAssetDataBaseDefinition {
 #[derive(Debug, Deserialize)]
 pub struct UserInfoCard {
     #[serde(rename = "supplementalDisplayName")]
-    supplemental_display_name: Option<String>,
+    pub supplemental_display_name: Option<String>,
     #[serde(rename = "iconPath")]
-    icon_path: String,
+    pub icon_path: String,
     #[serde(rename = "membershipType")]
-    membership_type: MembershipType,
+    pub membership_type: MembershipType,
     #[serde(rename = "membershipId")]
-    membership_id: String,
+    pub membership_id: String,
     #[serde(rename = "displayName")]
-    display_name: String
+    pub display_name: String
 }
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct DestinyItemActionRequest {
     #[serde(rename = "itemId")]
-    item_id: i64,
+    pub item_id: i64,
     #[serde(rename = "characterId")]
-    character_id: i64,
+    pub character_id: i64,
     #[serde(rename = "membershipType")]
-    membership_type: MembershipType
+    pub membership_type: MembershipType
 }
 
 #[derive(Debug, Deserialize)]
 pub struct DestinyCharacterResponse {
-    inventory: Option<SingleComponentResponseOfDestinyInventoryComponent>,
-    character: Option<SingleComponentResponseOfDestinyCharacterComponent>,
-    progressions: Option<SingleComponentResponseOfDestinyCharacterProgressionComponent>
+    pub inventory: Option<SingleComponentResponseOfDestinyInventoryComponent>,
+    pub character: Option<SingleComponentResponseOfDestinyCharacterComponent>,
+    pub progressions: Option<SingleComponentResponseOfDestinyCharacterProgressionComponent>
 }
 
 #[derive(Debug, Deserialize)]
 pub struct SingleComponentResponseOfDestinyCharacterProgressionComponent {
-    data: DestinyCharacterProgressionComponent,
-    privacy: ComponentPrivacySetting
+    pub data: DestinyCharacterProgressionComponent,
+    pub privacy: ComponentPrivacySetting
 }
 
 #[derive(Debug, Deserialize)]
 pub struct DestinyCharacterProgressionComponent {
-    progressions: HashMap<u32, DestinyProgression>,
-    factions: HashMap<u32, DestinyFactionProgression>,
-    milestones: HashMap<u32, DestinyMilestone>,
-    quests: Vec<DestinyQuestStatus>,
+    pub progressions: HashMap<u32, DestinyProgression>,
+    pub factions: HashMap<u32, DestinyFactionProgression>,
+    pub milestones: HashMap<u32, DestinyMilestone>,
+    pub quests: Vec<DestinyQuestStatus>,
     #[serde(rename = "uninstancedItemObjectives")]
-    uninstanced_item_objectives: HashMap<u32, Vec<DestinyInventoryItemDefinition>>
+    pub uninstanced_item_objectives: HashMap<u32, Vec<DestinyInventoryItemDefinition>>
 }
 
 #[derive(Debug, Deserialize)]
 pub struct DestinyInventoryItemDefinition {
     #[serde(rename = "displayProperties")]
-    display_properties: DestinyDisplayPropertiesDefinition,
+    pub display_properties: DestinyDisplayPropertiesDefinition,
     #[serde(rename = "secondaryIcon")]
-    secondary_icon: String,
+    pub secondary_icon: String,
     #[serde(rename = "secondaryOverlay")]
-    secondary_overlay: String,
+    pub secondary_overlay: String,
     #[serde(rename = "secondarySpecial")]
-    secondary_special: String,
+    pub secondary_special: String,
     #[serde(rename = "backgroundColor")]
-    background_color: DestinyColor,
-    screenshot: String,
+    pub background_color: DestinyColor,
+    pub screenshot: String,
     #[serde(rename = "itemTypeDisplayName")]
-    item_type_display_name: String,
+    pub item_type_display_name: String,
     #[serde(rename = "uiItemDisplayStyle")]
-    ui_item_display_style: String,
+    pub ui_item_display_style: String,
     #[serde(rename = "itemTypeAndTierDisplayName")]
-    item_type_and_tier_display_name: String,
+    pub item_type_and_tier_display_name: String,
     #[serde(rename = "displaySource")]
-    display_source: String
+    pub display_source: String,
+    #[serde(rename = "tooltipStyle")]
+    pub tooltip_style: String,
+    pub action: DestinyItemActionBlockDefinition
+}
+
+#[derive(Debug, Deserialize)]
+pub struct DestinyItemActionBlockDefinition {
+    #[serde(rename = "verbName")]
+    pub verb_name: String
 }
 
 #[derive(Debug, Deserialize)]
 pub struct DestinyDisplayPropertiesDefinition {
-    description: String,
-    name: String,
-    icon: String,
+    pub description: String,
+    pub name: String,
+    pub icon: String,
     #[serde(rename = "hasIcon")]
-    has_icon: bool
+    pub has_icon: bool
 }
 
 #[derive(Debug, Deserialize)]
 pub struct DestinyMilestone {
     #[serde(rename = "milestoneHash")]
-    milestone_hash: u32,
+    pub milestone_hash: u32,
     #[serde(rename = "availableQuests")]
-    available_quests: Vec<DestinyMilestoneQuest>,
-    values: HashMap<String, f64>,
+    pub available_quests: Vec<DestinyMilestoneQuest>,
+    pub values: HashMap<String, f64>,
     #[serde(rename = "vendorHashes")]
-    vendor_hashes: Vec<u32>,
-    vendors: Vec<DestinyMilestoneVendor>,
-    rewards: Vec<DestinyMilestoneRewardCategory>,
+    pub vendor_hashes: Vec<u32>,
+    pub vendors: Vec<DestinyMilestoneVendor>,
+    pub rewards: Vec<DestinyMilestoneRewardCategory>,
     #[serde(rename = "startDate")]
-    start_date: Option<String>,
+    pub start_date: Option<String>,
     #[serde(rename = "endDate")]
-    end_date: Option<String>
+    pub end_date: Option<String>
 }
 
 #[derive(Debug, Deserialize)]
 pub struct DestinyMilestoneRewardCategory {
     #[serde(rename = "rewardCategoryHash")]
-    reward_category_hash: u32,
-    entries: Vec<DestinyMilestoneRewardEntry>
+    pub reward_category_hash: u32,
+    pub entries: Vec<DestinyMilestoneRewardEntry>
 }
 
 #[derive(Debug, Deserialize)]
 pub struct DestinyMilestoneRewardEntry {
     #[serde(rename = "rewardEntryHash")]
-    reward_entry_hash: u32,
-    earned: bool,
-    redeemed: bool
+    pub reward_entry_hash: u32,
+    pub earned: bool,
+    pub redeemed: bool
 }
 
 #[derive(Debug, Deserialize)]
 pub struct DestinyMilestoneVendor {
     #[serde(rename = "vendorHash")]
-    vendor_hash: u32,
+    pub vendor_hash: u32,
     #[serde(rename = "previewItemHash")]
-    preview_item_hash: Option<u32>
+    pub preview_item_hash: Option<u32>
 }
 
 #[derive(Debug, Deserialize)]
 pub struct DestinyMilestoneQuest {
     #[serde(rename = "questItemHash")]
-    quest_item_hash: u32,
-    status: DestinyQuestStatus,
-    activity: Option<DestinyMilestoneActivity>,
-    challenges: Vec<DestinyChallengeStatus>
+    pub quest_item_hash: u32,
+    pub status: DestinyQuestStatus,
+    pub activity: Option<DestinyMilestoneActivity>,
+    pub challenges: Vec<DestinyChallengeStatus>
 }
 
 #[derive(Debug, Deserialize)]
 pub struct DestinyChallengeStatus {
-    objective: DestinyObjectiveProgress
+    pub objective: DestinyObjectiveProgress
 }
 
 #[derive(Debug, Deserialize)]
 pub struct DestinyMilestoneActivity {
     #[serde(rename = "activityHash")]
-    activity_hash: u32,
+    pub activity_hash: u32,
     #[serde(rename = "activityModeHash")]
-    activity_mode_hash: Option<u32>,
+    pub activity_mode_hash: Option<u32>,
     #[serde(rename = "activityModeType")]
-    activity_mode_type: Option<ActivityModeType>,
+    pub activity_mode_type: Option<ActivityModeType>,
     #[serde(rename = "modifierHashes")]
-    modifier_hashes: Vec<u32>,
-    variants: Vec<DestinyMilestoneActivityVariant>
+    pub modifier_hashes: Vec<u32>,
+    pub variants: Vec<DestinyMilestoneActivityVariant>
 }
 
 #[derive(Debug, Deserialize)]
 pub struct DestinyMilestoneActivityVariant {
     #[serde(rename = "activityHash")]
-    activity_hash: u32,
+    pub activity_hash: u32,
     #[serde(rename = "completionStatus")]
-    completion_status: DestinyMilestoneActivityCompletionStatus,
+    pub completion_status: DestinyMilestoneActivityCompletionStatus,
     #[serde(rename = "activityModeHash")]
-    activity_mode_hash: Option<u32>,
+    pub activity_mode_hash: Option<u32>,
     #[serde(rename = "activityModeType")]
-    activity_mode_type: Option<ActivityModeType>
+    pub activity_mode_type: Option<ActivityModeType>
 }
 
 #[derive(Debug, Deserialize)]
 pub struct DestinyMilestoneActivityCompletionStatus {
-    completed: bool,
-    phases: Vec<DestinyMilestoneActivityPhase>
+    pub completed: bool,
+    pub phases: Vec<DestinyMilestoneActivityPhase>
 }
 
 #[derive(Debug, Deserialize)]
 pub struct DestinyMilestoneActivityPhase {
-    complete: bool
+    pub complete: bool
 }
 
 #[derive(Debug, Deserialize)]
 pub struct DestinyQuestStatus {
     #[serde(rename = "questHash")]
-    quest_hash: u32,
+    pub quest_hash: u32,
     #[serde(rename = "stepHash")]
-    step_hash: u32,
+    pub step_hash: u32,
     #[serde(rename = "stepObjectives")]
-    step_objectives: Vec<DestinyObjectiveProgress>,
-    tracked: bool,
+    pub step_objectives: Vec<DestinyObjectiveProgress>,
+    pub tracked: bool,
     #[serde(rename = "itemInstanceId")]
-    item_instance_id: i32,
-    completed: bool,
-    redeemed: bool,
-    started: bool,
+    pub item_instance_id: i32,
+    pub completed: bool,
+    pub redeemed: bool,
+    pub started: bool,
     #[serde(rename = "vendorHash")]
-    vendor_hash: Option<u32>
+    pub vendor_hash: Option<u32>
 }
 
 #[derive(Debug, Deserialize)]
 pub struct DestinyObjectiveProgress {
     #[serde(rename = "objectiveHash")]
-    objective_hash: u32,
+    pub objective_hash: u32,
     #[serde(rename = "destinationHash")]
-    destination_hash: Option<u32>,
+    pub destination_hash: Option<u32>,
     #[serde(rename = "activityHash")]
-    activity_hash: Option<u32>,
-    progress: Option<i32>,
-    complete: bool,
-    visible: bool
+    pub activity_hash: Option<u32>,
+    pub progress: Option<i32>,
+    pub complete: bool,
+    pub visible: bool
 }
 
 #[derive(Debug, Deserialize)]
 pub struct DestinyFactionProgression {
     #[serde(rename = "factionHash")]
-    faction_hash: u32,
+    pub faction_hash: u32,
     #[serde(rename = "factionVendorIndex")]
-    faction_vendor_index: i32,
+    pub faction_vendor_index: i32,
     #[serde(rename = "progressionHash")]
-    progression_hash: u32,
+    pub progression_hash: u32,
     #[serde(rename = "dailyProgress")]
-    daily_progress: i32,
+    pub daily_progress: i32,
     #[serde(rename = "dailyLimit")]
-    daily_limit: i32,
+    pub daily_limit: i32,
     #[serde(rename = "weeklyProgress")]
-    weekly_progress: i32,
+    pub weekly_progress: i32,
     #[serde(rename = "weeklyLimit")]
-    weekly_limit: i32,
+    pub weekly_limit: i32,
     #[serde(rename = "currentProgress")]
-    current_progress: i32,
-    level: i32,
+    pub current_progress: i32,
+    pub level: i32,
     #[serde(rename = "levelCap")]
-    level_cap: i32,
+    pub level_cap: i32,
     #[serde(rename = "stepIndex")]
-    step_index: i32,
+    pub step_index: i32,
     #[serde(rename = "progressToNextLevel")]
-    progress_to_next_level: i32,
+    pub progress_to_next_level: i32,
     #[serde(rename = "nextLevelAt")]
-    next_level_at: i32
+    pub next_level_at: i32
 }
 
 #[derive(Debug, Deserialize)]
 pub struct SingleComponentResponseOfDestinyCharacterComponent {
-    data: DestinyCharacterComponent,
-    privacy: ComponentPrivacySetting
+    pub data: DestinyCharacterComponent,
+    pub privacy: ComponentPrivacySetting
 } 
 
 #[derive(Debug, Deserialize)]
 pub struct DestinyCharacterComponent {
     #[serde(rename = "membershipId")]
-    membership_id: i64,
+    pub membership_id: i64,
     #[serde(rename = "membershipType")]
-    membership_type: MembershipType,
+    pub membership_type: MembershipType,
     #[serde(rename = "characterId")]
-    character_id: i64,
+    pub character_id: i64,
     #[serde(rename = "dateLastPlayed")]
-    date_last_played: String,
+    pub date_last_played: String,
     #[serde(rename = "minutesPlayedThisSession")]
-    minutes_played_this_session: i64,
+    pub minutes_played_this_session: i64,
     #[serde(rename = "minutesPlayedTotal")]
-    minutes_played_total: i64,
-    light: i32,
-    stats: HashMap<i32, u32>,
+    pub minutes_played_total: i64,
+    pub light: i32,
+    pub stats: HashMap<i32, u32>,
     #[serde(rename = "raceHash")]
-    race_hash: u32,
+    pub race_hash: u32,
     #[serde(rename = "genderHash")]
-    gender_hash: u32,
+    pub gender_hash: u32,
     #[serde(rename = "classHash")]
-    class_hash: u32,
+    pub class_hash: u32,
     #[serde(rename = "raceType")]
-    race_type: DestinyRace,
+    pub race_type: DestinyRace,
     #[serde(rename = "classType")]
-    class_type: DestinyClass,
+    pub class_type: DestinyClass,
     #[serde(rename = "genderType")]
-    gender_type: DestinyGender,
+    pub gender_type: DestinyGender,
     #[serde(rename = "emblemPath")]
-    emblem_path: String,
+    pub emblem_path: String,
     #[serde(rename = "emblemColor")]
-    emblem_color: DestinyColor,
+    pub emblem_color: DestinyColor,
     #[serde(rename = "levelProgression")]
-    level_progression: DestinyProgression,
+    pub level_progression: DestinyProgression,
     #[serde(rename = "baseCharacterLevel")]
-    base_character_level: i32,
+    pub base_character_level: i32,
     #[serde(rename = "percentToNextLevel")]
-    percent_to_next_level: i32
+    pub percent_to_next_level: i32
 }
 
 #[derive(Debug, Deserialize)]
 pub struct DestinyProgression {
     #[serde(rename = "progressionHash")]
-    progression_hash: u32,
+    pub progression_hash: u32,
     #[serde(rename = "dailyProgress")]
-    daily_progress: i32,
+    pub daily_progress: i32,
     #[serde(rename = "dailyLimit")]
-    daily_limit: i32,
+    pub daily_limit: i32,
     #[serde(rename = "weeklyProgress")]
-    weekly_progress: i32,
+    pub weekly_progress: i32,
     #[serde(rename = "weeklyLimit")]
-    weekly_limit: i32,
+    pub weekly_limit: i32,
     #[serde(rename = "currentProgress")]
-    current_progress: i32,
-    level: i32,
+    pub current_progress: i32,
+    pub level: i32,
     #[serde(rename = "levelCap")]
-    level_cap: i32,
+    pub level_cap: i32,
     #[serde(rename = "stepIndex")]
-    step_index: i32,
+    pub step_index: i32,
     #[serde(rename = "progressToNextLevel")]
-    progress_to_next_level: i32,
+    pub progress_to_next_level: i32,
     #[serde(rename = "nextLevelAt")]
-    next_level_at: i32
+    pub next_level_at: i32
 }
 
 #[derive(Debug, Deserialize)]
 pub struct DestinyColor {
-    red: u8,
-    green: u8,
-    blue: u8,
-    alpha: u8
+    pub red: u8,
+    pub green: u8,
+    pub blue: u8,
+    pub alpha: u8
 }
 
 #[derive(Debug, Deserialize)]
 pub struct SingleComponentResponseOfDestinyInventoryComponent {
-    data: DestinyInventoryComponent,
-    privacy: ComponentPrivacySetting
+    pub data: DestinyInventoryComponent,
+    pub privacy: ComponentPrivacySetting
 }
 
 #[derive(Debug, Deserialize)]
 pub struct DestinyInventoryComponent {
-    items: Vec<DestinyItemComponent>
+    pub items: Vec<DestinyItemComponent>
 }
 
 #[derive(Debug, Deserialize)]
 pub struct DestinyItemComponent {
     #[serde(rename = "itemHash")]
-    item_hash: u32,
+    pub item_hash: u32,
     #[serde(rename = "itemInstanceId")]
-    item_instance_id: i64,
-    quantity: i32,
+    pub item_instance_id: i64,
+    pub quantity: i32,
     #[serde(rename = "bindStatus")]
-    bind_status: ItemBindStatus,
-    location: ItemLocation,
+    pub bind_status: ItemBindStatus,
+    pub location: ItemLocation,
     #[serde(rename = "bucketHash")]
-    bucket_hash: u32,
+    pub bucket_hash: u32,
     #[serde(rename = "transferStatus")]
-    transfer_status: TransferStatuses,
-    lockable: bool,
-    state: ItemState
+    pub transfer_status: TransferStatuses,
+    pub lockable: bool,
+    pub state: ItemState
 }
+
+enum_number!(DestinyTalentNodeState {
+    Invalid = 0,
+    CanUpgrade = 1,
+    NoPoints = 2,
+    NoPrerequisites = 3,
+    NoSteps = 4,
+    NoUnlock = 5,
+    NoMaterial = 6,
+    NoGridLevel = 7,
+    SwappingLocked = 8,
+    MustSwap = 9,
+    Complete = 10,
+    Unknown = 11,
+    CreationOnly = 12,
+    Hidden = 13,
+});
+
+enum_number!(DestinyStatCategory {
+    Gameplay = 0,
+    Weapon = 1,
+    Defense = 2,
+    Primary = 3,
+});
+
+enum_number!(DestinyStatAggregationType {
+    CharacterAverage = 0,
+    Character = 1,
+    Item = 2,
+});
+
+enum_number!(EquipFailureReason {
+    None = 0,
+    ItemUnequippable = 1,
+    ItemUniqueEquipRestricted = 2,
+    ItemFailedUnlockCheck = 4,
+    ItemFailedLevelCheck = 8,
+    ItemNotOnCharacter = 16,
+});
+
+enum_number!(DamageType {
+    None = 0,
+    Kinetic = 1,
+    Arc = 2,
+    Thermal = 3,
+    Void = 4,
+    Raid = 5,
+});
 
 enum_number!(ActivityModeType {
     None = 0,
