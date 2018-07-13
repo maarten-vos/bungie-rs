@@ -305,7 +305,70 @@ pub struct DestinyItemActionRequest {
 pub struct DestinyCharacterResponse {
     pub inventory: Option<SingleComponentResponseOfDestinyInventoryComponent>,
     pub character: Option<SingleComponentResponseOfDestinyCharacterComponent>,
-    pub progressions: Option<SingleComponentResponseOfDestinyCharacterProgressionComponent>
+    pub progressions: Option<SingleComponentResponseOfDestinyCharacterProgressionComponent>,
+    #[serde(rename = "renderData")]
+    pub render_data: Option<SingleComponentResponseOfDestinyCharacterRenderComponent>
+}
+
+#[derive(Debug, Deserialize)]
+pub struct SingleComponentResponseOfDestinyCharacterRenderComponent {
+    pub data: DestinyCharacterRenderComponent,
+    pub privacy: ComponentPrivacySetting
+}
+
+#[derive(Debug, Deserialize)]
+pub struct DestinyCharacterRenderComponent {
+    #[serde(rename = "customDyes")]
+    pub custom_dyes: Vec<DyeReference>,
+    pub customization: DestinyCharacterCustomization,
+    #[serde(rename = "peerView")]
+    pub peer_view: DestinyCharacterPeerView
+}
+
+#[derive(Debug, Deserialize)]
+pub struct DestinyCharacterPeerView {
+    pub equipment: Vec<DestinyItemPeerView>
+}
+
+#[derive(Debug, Deserialize)]
+pub struct DestinyItemPeerView {
+    #[serde(rename = "itemHash")]
+    pub item_hash: u32,
+    pub dyes: Vec<DyeReference>
+}
+
+#[derive(Debug, Deserialize)]
+pub struct DestinyCharacterCustomization {
+    pub personality: u32,
+    pub face: u32,
+    #[serde(rename = "skinColor")]
+    pub skin_color: u32,
+    #[serde(rename = "lipColor")]
+    pub lip_color: u32,
+    #[serde(rename = "eyeColor")]
+    pub eye_color: u32,
+    #[serde(rename = "hairColors")]
+    pub hair_colors: Vec<u32>,
+    #[serde(rename = "featureColors")]
+    pub feature_colors: Vec<u32>,
+    #[serde(rename = "decalColor")]
+    pub decal_color: u32,
+    #[serde(rename = "wearHelmet")]
+    pub wear_helmet: bool,
+    #[serde(rename = "hairIndex")]
+    pub hair_index: i32,
+    #[serde(rename = "featureIndex")]
+    pub feature_index: i32,
+    #[serde(rename = "decalIndex")]
+    pub decal_index: i32
+}
+
+#[derive(Debug, Deserialize)]
+pub struct DyeReference {
+    #[serde(rename = "channelHash")]
+    pub channel_hash: u32,
+    #[serde(rename = "dyeHash")]
+    pub dye_hash: u32
 }
 
 #[derive(Debug, Deserialize)]
