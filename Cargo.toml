@@ -7,7 +7,7 @@ license = "MIT"
 name = "bungie"
 readme = "README.md"
 repository = "https://github.com/inferiormartin/bungie-rs"
-version = "0.1.2"
+version = "0.2.0"
 
 [badges]
 travis-ci = { repository = "inferiormartin/bungie-rs", branch = "master" }
