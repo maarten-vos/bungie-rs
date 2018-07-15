@@ -1,4 +1,4 @@
-# bungie-rs [![Build Status](https://travis-ci.com/inferiormartin/bungie-rs.svg?branch=master)](https://travis-ci.com/inferiormartin/bungie-rs)
+# bungie-rs [![Build Status](https://travis-ci.com/inferiormartin/bungie-rs.svg?branch=master)](https://travis-ci.com/inferiormartin/bungie-rs)[![Crates.io](https://img.shields.io/crates/v/bungie.svg)](https://crates.io/crates/bungie)
 *A Rust crate for interacting with the Bungie.net API*
 
 NOTE: This crate is in alpha and highly unstable!
