@@ -4,7 +4,7 @@ use std::fmt;
 #[derive(Debug, Deserialize)]
 pub struct Response<T> {
     #[serde(rename = "Response")]
-    pub response: T,
+    pub response: Option<T>,
     #[serde(rename = "ErrorCode")]
     pub error_code: i32,
     #[serde(rename = "ThrottleSeconds")]
@@ -17,6 +17,17 @@ pub struct Response<T> {
     pub message_data: HashMap<String, String>,
     #[serde(rename = "DetailedErrorTrace")]
     pub detailed_error_trace: Option<String>
+}
+
+#[derive(Debug, Deserialize)]
+pub struct DestinyProfileResponse {
+    pub characters: Option<DictionaryComponentResponseOfint64AndDestinyCharacterComponent>
+}
+
+#[derive(Debug, Deserialize)]
+pub struct DictionaryComponentResponseOfint64AndDestinyCharacterComponent {
+    pub data: HashMap<i64, DestinyCharacterComponent>,
+    pub privacy: ComponentPrivacySetting
 }
 
 #[derive(Debug, Deserialize)]
