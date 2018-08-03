@@ -21,7 +21,7 @@ fn main() -> Result<(), failure::Error> {
     dotenv()?;
     let bungie = BungieClient::new(env::var("API_KEY")?);
     let manifest = bungie.destiny2().get_destiny_manifest()?;
-    println!("{}", manifest.response.version);
+    println!("{}", manifest);
     Ok(())
 }
 ```
