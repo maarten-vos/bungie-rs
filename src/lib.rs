@@ -10,9 +10,7 @@ use reqwest::{
     Client,
     header::Authorization
 };
-use serde::{
-    de::DeserializeOwned
-};
+use serde::de::DeserializeOwned;
 
 #[macro_use]
 mod macros;
@@ -27,11 +25,11 @@ pub struct BungieClient {
 
 impl BungieClient {
     
-    pub fn new(api_key: String) -> BungieClient {
-        BungieClient { api_key, oauth_token: None }
+    pub fn new(api_key: String) -> Self {
+        Self { api_key, oauth_token: None }
     }
 
-    pub fn with_authentication_token(mut self, oauth_token: String) -> BungieClient {
+    pub fn with_authentication_token(mut self, oauth_token: String) -> Self {
         self.oauth_token = Some(oauth_token);
         self
     }
