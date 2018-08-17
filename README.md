@@ -1,5 +1,4 @@
-# bungie-rs [![Build Status](https://travis-ci.com/inferiormartin/bungie-rs.svg?branch=master)](https://travis-ci.com/inferiormartin/bungie-rs) [![Crates.io](https://img.shields.io/crates/v/bungie.svg)](https://crates.io/crates/bungie) 
-[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
+# bungie-rs [![Build Status](https://travis-ci.com/inferiormartin/bungie-rs.svg?branch=master)](https://travis-ci.com/inferiormartin/bungie-rs) [![Crates.io](https://img.shields.io/crates/v/bungie.svg)](https://crates.io/crates/bungie) [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 *A Rust crate for interacting with the Bungie.net API*
 
 NOTE: This crate is in alpha and highly unstable!
