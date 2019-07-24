@@ -1,7 +1,7 @@
 # bungie-rs [![Build Status](https://travis-ci.com/inferiormartin/bungie-rs.svg?branch=master)](https://travis-ci.com/inferiormartin/bungie-rs) [![Crates.io](https://img.shields.io/crates/v/bungie.svg)](https://crates.io/crates/bungie) [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 *A Rust crate for interacting with the Bungie.net API*
 
-Currently this crate is in alpha and not ready for production usage do to time constraints, contributions are appreciated.
+While the project is called "bungie-rs", it mostly focusses on the Destiny 2 part of the API.
 
 ## Features
 
